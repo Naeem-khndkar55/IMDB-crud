@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { Movie, dummyMovieList } from "./Movie";
+import MovieList from "./MovieList";
+
 const Home = () => {
+  const [movieList, setMovieList] = useState(dummyMovieList as Movie[]);
   return (
     <div className="bg-gray-900 text-white min-h-screen p-6">
       <div className="container mx-auto">
@@ -27,6 +32,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <MovieList list={dummyMovieList} />
     </div>
   );
 };
