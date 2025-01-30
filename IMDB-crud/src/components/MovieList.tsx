@@ -7,12 +7,8 @@ const MovieList = (props: Props) => {
   const { list } = props;
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">IMDB Dummy Movie List</h2>
-      <input
-        type="Button"
-        value="add movies"
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 "
-      />
+      <h2 className="text-2xl font-bold mb-4">Movie List</h2>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {list.map((movie) => (
           <div

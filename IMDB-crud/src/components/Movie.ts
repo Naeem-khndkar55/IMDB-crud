@@ -19,6 +19,9 @@ export const dummyMovieList: Movie[]=[{
     actors:"lal,nill",
     director:"abc",
     releaseDate:"01/02/122"
-}
+}]
 
-]
+export enum PageEnum{
+    list,
+    add
+}
