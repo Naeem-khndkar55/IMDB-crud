@@ -19,6 +19,12 @@ const Home = () => {
     setMovieList([...movieList, data]); // Updates movieList state
     setAddMovie(PageEnum.list); // Redirects to movie list after adding
   };
+  const deleteEmployee = (data: Movie) => {
+    const idx = movieList.indexOf(data);
+    const copyList = [...movieList];
+    copyList.splice(idx, 1);
+    setMovieList(copyList);
+  };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen p-6">
@@ -35,7 +41,7 @@ const Home = () => {
           >
             Add Movie
           </button>
-          <MovieList list={movieList} />
+          <MovieList list={movieList} onDeleteEventHndlr={deleteEmployee} />
         </>
       )}
       {addMovie === PageEnum.add && (

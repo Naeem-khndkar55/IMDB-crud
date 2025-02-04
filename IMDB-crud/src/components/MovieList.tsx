@@ -2,9 +2,11 @@ import { Movie } from "./Movie";
 
 type Props = {
   list: Movie[];
+  onDeleteEventHndlr: (data: Movie) => void;
 };
 const MovieList = (props: Props) => {
-  const { list } = props;
+  const { list, onDeleteEventHndlr } = props;
+
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Movie List</h2>
@@ -29,7 +31,10 @@ const MovieList = (props: Props) => {
               <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 ">
                 Edit
               </button>
-              <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 ">
+              <button
+                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 "
+                onClick={() => onDeleteEventHndlr(movie)}
+              >
                 Delete
               </button>
             </div>
