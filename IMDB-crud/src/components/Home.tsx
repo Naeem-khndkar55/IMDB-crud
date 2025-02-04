@@ -4,11 +4,22 @@ import MovieList from "./MovieList";
 import AddMovie from "./AddMovie";
 
 const Home = () => {
-  const [movieList, setMovieList] = useState(dummyMovieList as Movie[]);
+  const [movieList, setMovieList] = useState<Movie[]>(dummyMovieList);
   const [addMovie, setAddMovie] = useState(PageEnum.list);
+
   const onAddHandler = () => {
     setAddMovie(PageEnum.add);
   };
+
+  const showListPage = () => {
+    setAddMovie(PageEnum.list);
+  };
+
+  const newMovie = (data: Movie) => {
+    setMovieList([...movieList, data]); // Updates movieList state
+    setAddMovie(PageEnum.list); // Redirects to movie list after adding
+  };
+
   return (
     <div className="bg-gray-900 text-white min-h-screen p-6">
       <div className="container mx-auto">
@@ -18,16 +29,18 @@ const Home = () => {
       </div>
       {addMovie === PageEnum.list && (
         <>
-          <input
-            type="Button"
-            value="add movies"
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 "
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600"
             onClick={onAddHandler}
-          />
-          <MovieList list={dummyMovieList} />
+          >
+            Add Movie
+          </button>
+          <MovieList list={movieList} />
         </>
       )}
-      {addMovie === PageEnum.add && <AddMovie />}
+      {addMovie === PageEnum.add && (
+        <AddMovie onCancelClick={showListPage} handleSubmit={newMovie} />
+      )}
     </div>
   );
 };
