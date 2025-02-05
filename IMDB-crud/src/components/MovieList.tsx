@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Movie } from "./Movie";
+import ViewMovie from "./ViewMovie";
 
 type Props = {
   list: Movie[];
@@ -6,7 +8,15 @@ type Props = {
 };
 const MovieList = (props: Props) => {
   const { list, onDeleteEventHndlr } = props;
-
+  const [showModal, setShowModal] = useState(false);
+  const [showMovie, setShowMovie] = useState(null as Movie | null);
+  const viewMovie = (data: Movie) => {
+    setShowMovie(data);
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Movie List</h2>
@@ -25,7 +35,10 @@ const MovieList = (props: Props) => {
               Release Date: {movie.releaseDate}
             </p>
             <div className="flex justify-between mt-4">
-              <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 ">
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 "
+                onClick={() => viewMovie(movie)}
+              >
                 View
               </button>
               <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 ">
@@ -41,6 +54,9 @@ const MovieList = (props: Props) => {
           </div>
         ))}
       </div>
+      {showModal && showMovie !== null && (
+        <ViewMovie onClose={closeModal} data={showMovie} />
+      )}
     </div>
   );
 };
