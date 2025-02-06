@@ -6,14 +6,6 @@ export interface Movie{
     releaseDate:string
 }
 
-export const dummyMovieList: Movie[]=[{
-    id:new Date().toJSON().toString(),
-    title: "xyz",
-    actors:"lal,nill",
-    director:"abc",
-    releaseDate:"01/02/122"
-}]
-
 export enum PageEnum{
     list,
     add,

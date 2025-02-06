@@ -1,13 +1,24 @@
-import { useState } from "react";
-import { Movie, PageEnum, dummyMovieList } from "./Movie";
+import { useState, useEffect } from "react";
+import { Movie, PageEnum } from "./Movie";
 import MovieList from "./MovieList";
 import AddMovie from "./AddMovie";
 import EditMovie from "./EditMovie";
 
 const Home = () => {
-  const [movieList, setMovieList] = useState<Movie[]>(dummyMovieList);
+  // Initialize movieList from local storage or an empty array if no data exists
+  const [movieList, setMovieList] = useState<Movie[]>(() => {
+    const savedMovieList = window.localStorage.getItem("MovieList");
+    return savedMovieList ? JSON.parse(savedMovieList) : [];
+  });
+
   const [addMovie, setAddMovie] = useState(PageEnum.list);
   const [edit, setEdit] = useState({} as Movie);
+
+  // Save movieList to local storage whenever it changes
+  useEffect(() => {
+    window.localStorage.setItem("MovieList", JSON.stringify(movieList));
+  }, [movieList]);
+
   const onAddHandler = () => {
     setAddMovie(PageEnum.add);
   };
@@ -20,16 +31,19 @@ const Home = () => {
     setMovieList([...movieList, data]); // Updates movieList state
     setAddMovie(PageEnum.list); // Redirects to movie list after adding
   };
+
   const deleteMovie = (data: Movie) => {
     const idx = movieList.indexOf(data);
     const copyList = [...movieList];
     copyList.splice(idx, 1);
     setMovieList(copyList);
   };
+
   const movieEdit = (data: Movie) => {
     setAddMovie(PageEnum.edit);
     setEdit(data);
   };
+
   const updateList = (data: Movie) => {
     const idx = movieList.findIndex((movie) => movie.id === data.id);
     if (idx !== -1) {
