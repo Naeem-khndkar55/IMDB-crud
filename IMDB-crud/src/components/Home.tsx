@@ -5,7 +5,6 @@ import AddMovie from "./AddMovie";
 import EditMovie from "./EditMovie";
 
 const Home = () => {
-  // Initialize movieList from local storage or an empty array if no data exists
   const [movieList, setMovieList] = useState<Movie[]>(() => {
     const savedMovieList = window.localStorage.getItem("MovieList");
     return savedMovieList ? JSON.parse(savedMovieList) : [];
@@ -14,7 +13,6 @@ const Home = () => {
   const [addMovie, setAddMovie] = useState(PageEnum.list);
   const [edit, setEdit] = useState({} as Movie);
 
-  // Save movieList to local storage whenever it changes
   useEffect(() => {
     window.localStorage.setItem("MovieList", JSON.stringify(movieList));
   }, [movieList]);
@@ -28,8 +26,8 @@ const Home = () => {
   };
 
   const newMovie = (data: Movie) => {
-    setMovieList([...movieList, data]); // Updates movieList state
-    setAddMovie(PageEnum.list); // Redirects to movie list after adding
+    setMovieList([...movieList, data]);
+    setAddMovie(PageEnum.list);
   };
 
   const deleteMovie = (data: Movie) => {
