@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Movie, PageEnum, dummyMovieList } from "./Movie";
 import MovieList from "./MovieList";
 import AddMovie from "./AddMovie";
+import EditMovie from "./EditMovie";
 
 const Home = () => {
   const [movieList, setMovieList] = useState<Movie[]>(dummyMovieList);
   const [addMovie, setAddMovie] = useState(PageEnum.list);
-
+  const [edit, setEdit] = useState({} as Movie);
   const onAddHandler = () => {
     setAddMovie(PageEnum.add);
   };
@@ -19,11 +20,24 @@ const Home = () => {
     setMovieList([...movieList, data]); // Updates movieList state
     setAddMovie(PageEnum.list); // Redirects to movie list after adding
   };
-  const deleteEmployee = (data: Movie) => {
+  const deleteMovie = (data: Movie) => {
     const idx = movieList.indexOf(data);
     const copyList = [...movieList];
     copyList.splice(idx, 1);
     setMovieList(copyList);
+  };
+  const movieEdit = (data: Movie) => {
+    setAddMovie(PageEnum.edit);
+    setEdit(data);
+  };
+  const updateList = (data: Movie) => {
+    const idx = movieList.findIndex((movie) => movie.id === data.id);
+    if (idx !== -1) {
+      const updatedMovies = [...movieList];
+      updatedMovies[idx] = data;
+      setMovieList(updatedMovies);
+      setAddMovie(PageEnum.list); // Redirect to list page after editing
+    }
   };
 
   return (
@@ -41,11 +55,22 @@ const Home = () => {
           >
             Add Movie
           </button>
-          <MovieList list={movieList} onDeleteEventHndlr={deleteEmployee} />
+          <MovieList
+            list={movieList}
+            onDeleteEventHndlr={deleteMovie}
+            onEditHandler={movieEdit}
+          />
         </>
       )}
       {addMovie === PageEnum.add && (
         <AddMovie onCancelClick={showListPage} handleSubmit={newMovie} />
+      )}
+      {addMovie === PageEnum.edit && (
+        <EditMovie
+          data={edit}
+          onCancelClick={showListPage}
+          handleSubmit={updateList}
+        />
       )}
     </div>
   );

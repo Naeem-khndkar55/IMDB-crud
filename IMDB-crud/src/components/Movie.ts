@@ -12,16 +12,10 @@ export const dummyMovieList: Movie[]=[{
     actors:"lal,nill",
     director:"abc",
     releaseDate:"01/02/122"
-},
-{
-    id:new Date().toJSON().toString(),
-    title: "xyz",
-    actors:"lal,nill",
-    director:"abc",
-    releaseDate:"01/02/122"
 }]
 
 export enum PageEnum{
     list,
-    add
+    add,
+    edit
 }

@@ -5,9 +5,10 @@ import ViewMovie from "./ViewMovie";
 type Props = {
   list: Movie[];
   onDeleteEventHndlr: (data: Movie) => void;
+  onEditHandler: (data: Movie) => void;
 };
 const MovieList = (props: Props) => {
-  const { list, onDeleteEventHndlr } = props;
+  const { list, onDeleteEventHndlr, onEditHandler } = props;
   const [showModal, setShowModal] = useState(false);
   const [showMovie, setShowMovie] = useState(null as Movie | null);
   const viewMovie = (data: Movie) => {
@@ -41,7 +42,10 @@ const MovieList = (props: Props) => {
               >
                 View
               </button>
-              <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 ">
+              <button
+                className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 "
+                onClick={() => onEditHandler(movie)}
+              >
                 Edit
               </button>
               <button
